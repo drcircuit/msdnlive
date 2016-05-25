@@ -1,3 +1,9 @@
+/**
+ * Original code written by @seb_ly, as presented on Trondheim Developer Conference in 2015
+ * No animals were harmed during the production of this code 
+ * 
+ * @digitaldias
+ */
 var canvas = document.createElement("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
