@@ -4,18 +4,15 @@
  * 
  * @digitaldias
  */
-var canvas = document.createElement("canvas");
-canvas.width = window.innerWidth;
+var canvas    = document.createElement("canvas");
+canvas.width  = window.innerWidth;
 canvas.height = window.innerHeight;
 document.body.appendChild(canvas);
 
-
-var ctx = canvas.getContext("2d");
-
-
+var ctx  = canvas.getContext("2d");
 var tree = new Branch(100);
-
 animate();
+
 
 function animate()
 {
@@ -28,6 +25,7 @@ function animate()
     window.requestAnimationFrame(animate);
     ctx.restore();
 }
+
 
 function Branch(size, rotation)
 {
@@ -42,15 +40,13 @@ function Branch(size, rotation)
     
     this.render = function()
     {
-        ctx.save();
-        
+        ctx.save();        
         ctx.rotate((rotation  + Math.sin(this.sway)) * Math.PI/180);
         ctx.beginPath();
-        ctx.lineWidth = size * 0.1;
+        ctx.lineWidth   = size * 0.1;
         ctx.strokeStyle = 'White';
         ctx.moveTo(0, 0);
         ctx.lineTo(0, -size);
-
         ctx.stroke();
         ctx.translate(0, -size);
         
@@ -58,15 +54,11 @@ function Branch(size, rotation)
             this.children[i].render();
         }
         this.sway += this.swaySpeed;
-        ctx.restore();
-        
-        
-    }
-    
+        ctx.restore();                
+    }    
 }
+
 
 function random(max, min){
-    return Math.random() * (max - min) + min;
-    
+    return Math.random() * (max - min) + min;    
 }
-
