@@ -16,6 +16,15 @@ namespace EmotionApp.MVVM
         private readonly EmotionServiceClient _client;
         private bool _canTakePicture;
 
+        private EmotionScore _surprise;
+        private EmotionScore _anger;
+        private EmotionScore _contemt;
+        private EmotionScore _disgust;
+        private EmotionScore _fear;
+        private EmotionScore _happiness;
+        private EmotionScore _neutral;
+        private EmotionScore _sadness;
+
         public MainPageViewModel()
         {
             _imageCapture = new ImageCapture();
@@ -82,15 +91,16 @@ namespace EmotionApp.MVVM
                 return;
 
             var scores = results[0].Scores;
-
-            var anger     = new EmotionScore("Anger"    , scores.Anger);
-            var contemt   = new EmotionScore("Contempt" , scores.Contempt);
-            var disgust   = new EmotionScore("Disgust"  , scores.Disgust);
-            var fear      = new EmotionScore("Fear"     , scores.Fear);
-            var happiness = new EmotionScore("Happiness", scores.Happiness);
-            var neutral   = new EmotionScore("Neutral"  , scores.Neutral);
-            var sadness   = new EmotionScore("Sadness"  , scores.Sadness);
-            var surprise  = new EmotionScore("Surprise" , scores.Surprise);
+            
+            
+            _anger     = new EmotionScore("Anger"    , scores.Anger);
+            _contemt   = new EmotionScore("Contempt" , scores.Contempt);
+            _disgust   = new EmotionScore("Disgust"  , scores.Disgust);
+            _fear      = new EmotionScore("Fear"     , scores.Fear);
+            _happiness = new EmotionScore("Happiness", scores.Happiness);
+            _neutral   = new EmotionScore("Neutral"  , scores.Neutral);
+            _sadness   = new EmotionScore("Sadness"  , scores.Sadness);
+            _surprise  = new EmotionScore("Surprise" , scores.Surprise);
         }
 
         public WriteableBitmap ContemptImage
@@ -140,9 +150,9 @@ namespace EmotionApp.MVVM
             {
             }
         }
-        public WriteableBitmap AngerImage
+        public EmotionScore AngerImage
         {
-            get { return null; }
+            get { return new EmotionScore("Anger", 66.7f); }
             set
             {
             }

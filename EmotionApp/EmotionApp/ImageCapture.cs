@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
@@ -32,15 +33,15 @@ namespace EmotionApp
                 var file = await Windows.Storage.KnownFolders.PicturesLibrary.CreateFileAsync(IMAGECAPTURE_FILENAME, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
                 try
-                {
+                {                    
                     await _mediaCapture.CapturePhotoToStorageFileAsync(_imageEncodingProperties, file);
                     var photoStream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
                     await bitmap.SetSourceAsync(photoStream);
                     return bitmap;
                 }
-                catch
+                catch(Exception ex)
                 {
-                    // This does nothing
+                    Debug.WriteLine(ex.Message);
                 }
                 return null;
             }

@@ -3,10 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EmotionApp"
+    xmlns:views="using:EmotionApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <DataTemplate x:Key="ScoreTemplate">
+            
+        </DataTemplate>
+    </Page.Resources>
+    
     <Grid Padding="10">
         <Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="Assets/Images/NdcBackdrop.png"/>
@@ -68,7 +75,8 @@
         <TextBlock Grid.Row="6" Grid.Column="3" Style="{StaticResource EmotionTitleStyle}" Text="bedrøvelse"    />
         <TextBlock Grid.Row="6" Grid.Column="4" Style="{StaticResource EmotionTitleStyle}" Text="Overraskelse" />
 
-        <Border Grid.Row="2" Grid.Column="1" BorderThickness="3" BorderBrush="Red" CornerRadius="15" Margin="10 0"><Image Source="{Binding AngerImage}" Stretch="Fill" Margin="3" /></Border>
+        <Border Grid.Row="2" Grid.Column="1" BorderThickness="3" BorderBrush="Red" CornerRadius="15" Margin="10 0"><views:EmotionView DataContext="{Binding Anger}" Margin="3"/></Border>
+        
         <Border Grid.Row="2" Grid.Column="2" BorderThickness="3" BorderBrush="Red" CornerRadius="15" Margin="10 0"><Image Source="{Binding ContemptImage}" Stretch="Fill" Margin="3" /></Border>
         <Border Grid.Row="2" Grid.Column="3" BorderThickness="3" BorderBrush="Red" CornerRadius="15" Margin="10 0"><Image Source="{Binding DisgustImage}" Stretch="Fill" Margin="3" /></Border>
         <Border Grid.Row="2" Grid.Column="4" BorderThickness="3" BorderBrush="Red" CornerRadius="15" Margin="10 0"><Image Source="{Binding FearImage}" Stretch="Fill" Margin="3" /></Border>
