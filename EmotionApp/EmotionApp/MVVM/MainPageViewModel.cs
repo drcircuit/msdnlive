@@ -28,7 +28,7 @@ namespace EmotionApp.MVVM
         public MainPageViewModel()
         {
             _imageCapture = new ImageCapture();
-            _client = new EmotionServiceClient("b9609c9cc0b848539f7f53a0f4ea5aad");
+            _client = new EmotionServiceClient("[Your client secret goes here]");
 
             #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             _imageCapture.InitializeAsync();
