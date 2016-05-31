@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
@@ -26,7 +23,6 @@ namespace EmotionApp
         }
 
 
-
         public async Task<WriteableBitmap> CaptureJpegImageAsync()
         {
             var bitmap = new WriteableBitmap(400, 300);
@@ -42,9 +38,9 @@ namespace EmotionApp
                     await bitmap.SetSourceAsync(photoStream);
                     return bitmap;
                 }
-                catch(Exception ex)
+                catch
                 {
-
+                    // This does nothing
                 }
                 return null;
             }

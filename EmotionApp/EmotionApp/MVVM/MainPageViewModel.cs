@@ -4,6 +4,9 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.ProjectOxford.Emotion.Contract;
+using System.Linq;
+using EmotionApp.Models;
 
 namespace EmotionApp.MVVM
 {
@@ -66,10 +69,28 @@ namespace EmotionApp.MVVM
             if (image == null)
                 return;
 
-            var file = await Windows.Storage.KnownFolders.PicturesLibrary.CreateFileAsync("lastImageCapture.jpg", Windows.Storage.CreationCollisionOption.OpenIfExists);
+            var file       = await Windows.Storage.KnownFolders.PicturesLibrary.CreateFileAsync("lastImageCapture.jpg", Windows.Storage.CreationCollisionOption.OpenIfExists);
             var fileStream = await file.OpenStreamForReadAsync();
-            var results = await _client.RecognizeAsync(fileStream);    
-            
+            var results    = await _client.RecognizeAsync(fileStream);
+
+            ParseResults(results);
+        }
+
+        private void ParseResults(Emotion[] results)
+        {
+            if(results == null || results.Length == 0)
+                return;
+
+            var scores = results[0].Scores;
+
+            var anger     = new EmotionScore("Anger"    , scores.Anger);
+            var contemt   = new EmotionScore("Contempt" , scores.Contempt);
+            var disgust   = new EmotionScore("Disgust"  , scores.Disgust);
+            var fear      = new EmotionScore("Fear"     , scores.Fear);
+            var happiness = new EmotionScore("Happiness", scores.Happiness);
+            var neutral   = new EmotionScore("Neutral"  , scores.Neutral);
+            var sadness   = new EmotionScore("Sadness"  , scores.Sadness);
+            var surprise  = new EmotionScore("Surprise" , scores.Surprise);
         }
 
         public WriteableBitmap ContemptImage
