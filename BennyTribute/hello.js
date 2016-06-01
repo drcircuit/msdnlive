@@ -6,49 +6,41 @@
  *
  * refactored code to avoid using "for", "this" and "new" as they are considered harmful in JavaScript.
  * This code passes JSLint.com if you assume browser.
+ * 'use strict'; pragmas added to pass JSLint, if you wrap your entire program in an immediately invoked anonymous
+ * function, this only needs to be added once as the first line of the anonymous function.
  */
-
-var treeHeight = 120;
-
-((function (treeHeight) {
+var window = document.defaultView || document.parentWindow;
+function random(max, min) {
     'use strict';
-    function random(max, min) {
-        return Math.random() * (max - min) + min;
+    return Math.random() * (max - min) + min;
+}
+
+function setupCanvas() {
+    'use strict';
+    var newCanvas = document.createElement("canvas");
+    newCanvas.width = window.innerWidth;
+    newCanvas.height = window.innerHeight;
+    document.body.appendChild(newCanvas);
+    document.body.style.backgroundColor = 'black';
+    return newCanvas;
+}
+
+function branch(size, rotation) {
+    'use strict';
+    var children = [];
+    var sway = 0;
+    var swaySpeed = random(0.02, 0.2);
+
+    if (size > 15) {
+        children.push(branch(size * random(0.7, 0.9), random(15, 30)));
+        children.push(branch(size * random(0.7, 0.9), random(-15, -30)));
     }
 
-    function setupCanvas() {
-        var newCanvas = document.createElement("canvas");
-        newCanvas.width = window.innerWidth;
-        newCanvas.height = window.innerHeight;
-        document.body.appendChild(newCanvas);
-        document.body.style.backgroundColor = 'black';
-        return newCanvas;
-    }
-    var canvas = setupCanvas();
-    var ctx = canvas.getContext("2d");
-
-
-    function branch(size, rotation, first) {
-        var children = [];
-        var sway = 0;
-        var swaySpeed = random(0.02, 0.2);
-
-        if (size > 15) {
-            children.push(branch(size * random(0.7, 0.9), random(15, 30), false));
-            children.push(branch(size * random(0.7, 0.9), random(-15, -30), false));
-        }
-
-        var incrementSway = function () {
-            sway += swaySpeed;
-        };
-
-        var getSway = function () {
-            return sway;
-        };
-
-        var render = function (context) {
+    return {
+        children: children,
+        render: function (context) {
             context.save();
-            context.rotate((rotation + Math.sin(getSway())) * Math.PI / 180);
+            context.rotate((rotation + Math.sin(sway)) * Math.PI / 180);
             context.beginPath();
             context.lineWidth = size * 0.1;
             context.strokeStyle = 'White';
@@ -59,30 +51,21 @@ var treeHeight = 120;
             children.forEach(function (child) {
                 child.render(context);
             });
-            incrementSway();
+            sway += swaySpeed;
             context.restore();
-        };
-
-
-        return {
-            getSway: getSway,
-            children: children,
-            first: first,
-            incrementSway: incrementSway,
-            render: render
-        };
-
-    }
-    var tree = branch(treeHeight, 0, true);
-
-
-    function animate() {
-        ctx.save();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.translate(canvas.width / 2, canvas.height - 100);
-        tree.render(ctx);
-        window.requestAnimationFrame(animate);
-        ctx.restore();
-    }
-    return {tree: tree, draw: animate};
-}(treeHeight)).draw());
+        }
+    };
+}
+var canvas = setupCanvas();
+var ctx = canvas.getContext("2d");
+var tree = branch(120, 0);
+function animate() {
+    'use strict';
+    ctx.save();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(canvas.width / 2, canvas.height - 100);
+    tree.render(ctx);
+    window.requestAnimationFrame(animate);
+    ctx.restore();
+}
+animate();
